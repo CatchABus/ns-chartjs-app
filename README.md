@@ -5,3 +5,5 @@ Since chart.js needs `Intl` for certain operations, we needed the following poly
 - @formatjs/intl-locale
 - @formatjs/intl-numberformat
 - @formatjs/intl-pluralrules
+
+NOTE: Application also contains a small `window` polyfill in `app.ts` 
