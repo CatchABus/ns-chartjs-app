@@ -8,13 +8,14 @@
     "@formatjs/intl-locale": "^3.4.0",
     "@formatjs/intl-numberformat": "^8.8.0",
     "@formatjs/intl-pluralrules": "^5.2.7",
-    "@nativescript/canvas": "^2.0.0-webgpu.4",
+    "@nativescript/canvas": "^2.0.0-webgpu.9",
     "@nativescript/core": "~8.8.0",
     "@nativescript/theme": "~3.0.2",
     "chart.js": "^4.4.0"
   },
   "devDependencies": {
     "@nativescript/android": "~8.8.0",
+    "@nativescript/ios": "8.8.1",
     "@nativescript/types": "~8.8.0",
     "@nativescript/webpack": "~5.0.18",
     "typescript": "~5.2.0"

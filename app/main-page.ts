@@ -1,4 +1,4 @@
-import { EventData, Page, Screen } from "@nativescript/core";
+import { Application, EventData, Page, Screen } from "@nativescript/core";
 import { HelloWorldModel } from "./main-view-model";
 import "chart.js/auto";
 import {
@@ -17,6 +17,22 @@ class NativeScriptPlatform extends BasePlatform {
     // method, for example: https://github.com/kkapsner/CanvasBlocker
     // https://github.com/chartjs/Chart.js/issues/2807
     return (item && item.getContext && item.getContext("2d")) || null;
+  }
+
+  getMaximumSize(
+    canvas: HTMLCanvasElement,
+    width?: number,
+    height?: number,
+    aspectRatio?: number
+  ): { width: number; height: number } {
+    const parent = (canvas as any).parent;
+    width = parent?.clientWidth ?? canvas.clientWidth;
+    height = parent?.clientHeight ?? canvas.clientHeight;
+    return { width, height };
+  }
+
+  getDevicePixelRatio(): number {
+    return Screen.mainScreen.scale;
   }
 
   addEventListener(
@@ -50,13 +66,15 @@ export function navigatingTo(args: EventData) {
   page.bindingContext = new HelloWorldModel();
 }
 
+let c: Chart;
+let canvas: Canvas;
+
 export function onChartReady(args) {
-  const canvas = args.object as Canvas;
-  canvas.width = canvas.clientWidth * Screen.mainScreen.scale;
-  canvas.height = canvas.clientHeight * Screen.mainScreen.scale;
-  const ctx = args.object.getContext("2d");
-  ctx.scale(Screen.mainScreen.scale, Screen.mainScreen.scale);
-  var c = new Chart(ctx, {
+  canvas = args.object as Canvas;
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+  const ctx = canvas.getContext("2d");
+  c = new Chart(ctx, {
     type: "bar",
     // @ts-ignore
     platform: NativeScriptPlatform,
@@ -71,6 +89,7 @@ export function onChartReady(args) {
       ],
     },
     options: {
+      responsive: false,
       animations: {
         y: {
           duration: 700,
